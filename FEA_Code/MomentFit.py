@@ -2,7 +2,7 @@ import scipy
 from scipy import optimize
 import numpy
 import unittest
-import LegendreBasis
+import basis
 #from src import basis
 
 def GauseLegendreQuadrature(fun, numPoints):
@@ -28,7 +28,7 @@ def assembleLinearMomentFitSystem( degree, pts ):
     A = numpy.zeros( shape = ( n, m ), dtype = "double" )
     for i in range(0,n):
         for j in range(0,m):
-            A[i,j]=LegendreBasis.evalLegendreBasis1D(degree=i,variate=pts[j])
+            A[i,j]=basis.evalLegendreBasis1D(degree=i,variate=pts[j])
     return A
 
 def solveLinearMomentFit( M, pts ):

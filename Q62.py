@@ -19,9 +19,8 @@ for i in range(1, num_elems):
     plt.axvline(x_val)
 
 
-
-coeff = numpy.array( [-1.0, 1.0 ] )
-sol_at_point = ComputeSolution.evaluateSolutionAt( x = -1.0, coeff = coeff, node_coords = node_coords, ien_array = ien_array, eval_basis = basis.evalLagrangeBasis1D)
+#coeff = numpy.array( [-1.0, 1.0 ] )
+#sol_at_point = ComputeSolution.evaluateSolutionAt( x = -1.0, coeff = coeff, node_coords = node_coords, ien_array = ien_array, eval_basis = basis.evalLagrangeBasis1D)
 plt.show()
 
 
