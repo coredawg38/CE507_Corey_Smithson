@@ -18,7 +18,7 @@ def assembleGramMatrix(domain, degree, solutionBasis):
 
 def assembleForceVector(func, domain, degree, solutionBasis):
     F = numpy.zeros([degree+1])
-    numPoints = 4
+    numPoints = int( numpy.ceil( ( 2*degree + 1 ) / 2.0 ) )
     for i in range(0,degree+1):
             N_i= lambda x:  solutionBasis(x,degree,i,[-1,1])
             integrand = lambda x: N_i(x)* func(basis.affineMapping1D( [-1, 1], domain, x) )

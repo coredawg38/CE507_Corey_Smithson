@@ -15,7 +15,7 @@ def evaluateElementBernsteinBasisAtParamCoord( uspline, elem_id, param_coord ):
 def evaluateElementSplineBasisAtParamCoord( uspline, elem_id, param_coord ):
     elem_ext_operator = bext.getElementExtractionOperator( uspline, elem_id )
     elem_bernstein_basis = evaluateElementBernsteinBasisAtParamCoord( uspline, elem_id, param_coord )
-    elem_spline_basis = elem_ext_operator*elem_bernstein_basis # Apply the extraction operator onto its Bernstein basis at the param coord
+    elem_spline_basis = numpy.matmul(elem_ext_operator,elem_bernstein_basis) # Apply the extraction operator onto its Bernstein basis at the param coord
     return elem_spline_basis 
 
 def plotUsplineBasis( uspline, color_by ):
@@ -37,7 +37,7 @@ def plotUsplineBasis( uspline, color_by ):
                 color = getLineColor( elem_idx )
             elif color_by == "node":
                 color = getLineColor( elem_node_ids[n] )
-            matplotlib.pyplot.plot( x, y[n,:], color = getLineColor( color ) )
+            matplotlib.pyplot.plot( x, y[n,:], color = color )
     matplotlib.pyplot.show()
 
 def getLineColor( idx ):
