@@ -7,21 +7,21 @@ import argparse
 import itertools
 import matplotlib
 from matplotlib import pyplot as plt
-from pyinstrument import Profiler
+# from pyinstrument import Profiler
 
 if __name__ == "src.cubitApproxGalerkin":
     from src import splineApproxGalerkin
     from src import bext
     from src import uspline
 elif __name__ == "cubitApproxGalerkin":
-    import splineApproxGalerkin
+    # import splineApproxGalerkin
     import bext
     import uspline
 elif __name__ == "__main__":
     file_path = os.path.realpath( __file__ )
     file_path = os.path.split( file_path )[0]
     sys.path.append( file_path + "/src" )
-    import splineApproxGalerkin
+    # import splineApproxGalerkin
     import bext
     import uspline
 
@@ -52,13 +52,13 @@ def prepareCommandInputs( target_fun_str, domain, degree, continuity ):
     target_fun = sympy.lambdify( sympy.symbols( "x", real = True ), target_fun )
     return target_fun, spline_space
 
-def parseCommandLineArguments( cli_args ):
+def parseCommandLineArguments( ):
     parser = argparse.ArgumentParser()
     parser.add_argument( "--function", "-f",   nargs = 1,   type = str,   required = True )
     parser.add_argument( "--domain", "-d",     nargs = 2,   type = float, required = True )
     parser.add_argument( "--degree", "-p",     nargs = '+', type = int,   required = True )
     parser.add_argument( "--continuity", "-c", nargs = '+', type = int,   required = True )
-    args = parser.parse_args( cli_args.split() )
+    args = parser.parse_args( )
     return args.function[0], args.domain, args.degree, args.continuity
 
 class Test_h_convergence_rates( unittest.TestCase ):
@@ -131,6 +131,6 @@ class Test_h_convergence_rates( unittest.TestCase ):
         plt.show()
 
 if __name__ == "__main__":
-    target_fun_str, domain, degree, continuity = parseCommandLineArguments( sys.argv[-1] )
+    target_fun_str, domain, degree, continuity = parseCommandLineArguments( )
     target_fun, spline_space = prepareCommandInputs( target_fun_str, domain, degree, continuity )
     main( target_fun, spline_space )

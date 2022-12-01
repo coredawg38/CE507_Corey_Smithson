@@ -2,6 +2,15 @@ import unittest
 import numpy
 import math
 
+def evalSplineBasis1D( extraction_operator, basis_idx, domain, variate):
+    degree = extraction_operator.shape[0] - 1
+    elem_bernstein_basis = numpy.zeros( degree + 1 )
+    for n in range( 0, degree + 1 ):
+        elem_bernstein_basis[n] = evalBernsteinBasis1DanyDomain(variate, degree, n, domain)
+    elem_spline_basis = numpy.matmul(extraction_operator,elem_bernstein_basis)
+    return elem_spline_basis[basis_idx]
+
+
 def affineMapping1D( domain, target_domain, x ):
     A = numpy.array( [ [ 1.0, domain[0] ], [ 1.0, domain[1] ] ] )
     b = numpy.array( [target_domain[0], target_domain[1] ] )
@@ -40,6 +49,27 @@ def evalBernsteinBasis1DanyDomain(variate, degree, basis_idx, domain):
     value = coefficient * variate**(basis_idx) * (1.0- variate)**(degree - basis_idx)
 
     return value
+
+def evalSplineBasisDeriv1D( extraction_operator, basis_idx, deriv, domain, variate):
+    degree = extraction_operator.shape[0] - 1
+    elem_bernstein_basis = numpy.zeros( degree + 1 )
+    for n in range( 0, degree + 1 ):
+        elem_bernstein_basis[n] = evalBernsteinBasisDeriv(degree, n, deriv, domain, variate)
+    elem_spline_basis = numpy.matmul(extraction_operator,elem_bernstein_basis)
+    return elem_spline_basis[basis_idx]
+
+def evalBernsteinBasisDeriv( degree, basis_idx, deriv, domain, variate ):
+    if deriv >= 1:
+        jacobian = ( domain[1] - domain[0] ) / ( 1 - 0 )
+        term_1 = evalBernsteinBasisDeriv( degree = degree - 1, basis_idx = basis_idx - 1, deriv = deriv - 1, domain = domain, variate = variate )
+        term_2 = evalBernsteinBasisDeriv( degree = degree - 1, basis_idx = basis_idx, deriv = deriv - 1, domain = domain, variate = variate )
+        basis_val = degree * ( term_1 - term_2 ) / jacobian
+    else:
+        if ( basis_idx < 0 ) or ( basis_idx > degree ):
+            basis_val = 0.0
+        else:
+            basis_val = evalBernsteinBasis1DanyDomain(variate, degree, basis_idx, domain)
+    return basis_val
 
 
 

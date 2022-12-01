@@ -7,13 +7,13 @@ if __name__ == "CubitPythonInterpreter_2":
     pass
 else:
     if "linux" in sys.platform:
-        sys.path.append("/opt/Coreform-Cubit-2022.10/bin")
+        sys.path.append("/opt/Coreform-Cubit-2022.11/bin")
     elif "darwin" in sys.platform:
         pass
     elif "win" in sys.platform:
-        sys.path.append( r"C:\Program Files\Coreform Cubit 2022.4\bin" )
+        sys.path.append( r"C:\Program Files\Coreform Cubit 2022.11\bin" )
     import cubit
-    cubit.init(["cubit", "-nog"])
+    cubit.init(["cubit", "-nog", "-nojournal" ])
 
 ## MAIN FUNCTION
 def make_uspline_mesh( spline_space, filename ):

@@ -106,6 +106,11 @@ def getElementExtractionOperator( uspline, elem_id ):
         C[n,:] = coeff_vectors[ coeff_vector_ids[n] ]
     return C
 
+def getNodeIdNearPoint( uspline, point ):
+    spline_nodes = getSplineNodes( uspline )[:,0]
+    node_dist = numpy.sqrt( ( spline_nodes - point )**2.0 )
+    return numpy.argmin( node_dist )
+
 def getGlobalExtractionOperator( uspline ):
     num_elems = getNumElems( uspline )
     num_nodes = getNumNodes( uspline )
